@@ -7,6 +7,26 @@ class FarmService {
     });
     this.tableName = 'farm_c';
   }
+// Transform database field names to UI property names
+  transformDbToUi(dbRecord) {
+    return {
+      Id: dbRecord.Id,
+      name: dbRecord.Name_c,
+      location: dbRecord.Location_c,
+      size: dbRecord.Size_c,
+      sizeUnit: dbRecord.SizeUnit_c
+    };
+  }
+
+  // Transform UI property names to database field names
+  transformUiToDb(uiData) {
+    return {
+      Name_c: uiData.name,
+      Location_c: uiData.location,
+      Size_c: parseFloat(uiData.size),
+      SizeUnit_c: uiData.sizeUnit
+    };
+  }
 
   async getAll() {
     try {
@@ -26,7 +46,9 @@ class FarmService {
         return [];
       }
       
-      return response.data || [];
+      // Transform database field names to UI property names
+      const transformedData = (response.data || []).map(record => this.transformDbToUi(record));
+      return transformedData;
     } catch (error) {
       console.error("Error fetching farms:", error?.response?.data?.message || error);
       return [];
@@ -47,25 +69,21 @@ class FarmService {
       const response = await this.apperClient.getRecordById(this.tableName, id, params);
       
       if (!response?.data) {
-        throw new Error("Farm not found");
+throw new Error("Farm not found");
       }
       
-      return response.data;
+      // Transform database field names to UI property names
+      return this.transformDbToUi(response.data);
     } catch (error) {
       console.error(`Error fetching farm ${id}:`, error?.response?.data?.message || error);
       throw error;
     }
   }
 
-  async create(farmData) {
+async create(farmData) {
     try {
       const params = {
-        records: [{
-          Name_c: farmData.name,
-          Location_c: farmData.location,
-          Size_c: parseFloat(farmData.size),
-          SizeUnit_c: farmData.sizeUnit
-        }]
+        records: [this.transformUiToDb(farmData)]
       };
       
       const response = await this.apperClient.createRecord(this.tableName, params);
@@ -84,7 +102,8 @@ class FarmService {
           throw new Error(failed[0].message || "Failed to create farm");
         }
         
-        return successful[0]?.data;
+// Transform database field names to UI property names
+        return successful[0]?.data ? this.transformDbToUi(successful[0].data) : null;
       }
     } catch (error) {
       console.error("Error creating farm:", error?.response?.data?.message || error);
@@ -92,15 +111,12 @@ class FarmService {
     }
   }
 
-  async update(id, farmData) {
+async update(id, farmData) {
     try {
       const params = {
         records: [{
           Id: id,
-          Name_c: farmData.name,
-          Location_c: farmData.location,
-          Size_c: parseFloat(farmData.size),
-          SizeUnit_c: farmData.sizeUnit
+          ...this.transformUiToDb(farmData)
         }]
       };
       
@@ -120,7 +136,8 @@ class FarmService {
           throw new Error(failed[0].message || "Failed to update farm");
         }
         
-        return successful[0]?.data;
+// Transform database field names to UI property names
+        return successful[0]?.data ? this.transformDbToUi(successful[0].data) : null;
       }
     } catch (error) {
       console.error("Error updating farm:", error?.response?.data?.message || error);
