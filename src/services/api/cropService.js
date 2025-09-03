@@ -200,5 +200,3 @@ class CropService {
 }
 
 export const cropService = new CropService();
-
-export const cropService = new CropService();

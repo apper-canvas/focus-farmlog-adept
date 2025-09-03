@@ -229,4 +229,3 @@ class TaskService {
 }
 
 export const taskService = new TaskService();
-export const taskService = new TaskService();

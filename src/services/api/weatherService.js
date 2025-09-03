@@ -66,4 +66,3 @@ class WeatherService {
 }
 
 export const weatherService = new WeatherService();
-export const weatherService = new WeatherService();
