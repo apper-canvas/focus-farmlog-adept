@@ -167,8 +167,14 @@ const Dashboard = () => {
             <h2 className="font-display font-bold text-xl text-gray-900 mb-4">
               Weather Today
             </h2>
-            {data.weather ? (
-              <WeatherCard weather={data.weather} />
+{data.weather ? (
+              <WeatherCard weather={{
+                condition: data.weather.Condition_c || data.weather.condition,
+                temperature: data.weather.Temperature_c || data.weather.temperature,
+                humidity: data.weather.Humidity_c || data.weather.humidity,
+                precipitation: data.weather.Precipitation_c || data.weather.precipitation,
+                ...data.weather
+              }} />
             ) : (
               <div className="text-center py-8">
                 <ApperIcon name="CloudOff" size={48} className="text-gray-300 mx-auto mb-3" />

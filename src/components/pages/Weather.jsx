@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Card from "@/components/atoms/Card";
-import WeatherCard from "@/components/molecules/WeatherCard";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import ApperIcon from "@/components/ApperIcon";
+import React, { useEffect, useState } from "react";
 import { weatherService } from "@/services/api/weatherService";
+import ApperIcon from "@/components/ApperIcon";
+import WeatherCard from "@/components/molecules/WeatherCard";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import Card from "@/components/atoms/Card";
 
 const Weather = () => {
   const [currentWeather, setCurrentWeather] = useState(null);
@@ -33,7 +33,7 @@ const Weather = () => {
     }
   };
 
-  const getWeatherIcon = (condition) => {
+const getWeatherIcon = (condition) => {
     const icons = {
       "sunny": "Sun",
       "cloudy": "Cloud",
@@ -43,10 +43,13 @@ const Weather = () => {
       "clear": "Sun",
       "overcast": "CloudDrizzle"
     };
-    return icons[condition.toLowerCase()] || "Sun";
+    
+    // Handle undefined/null condition and map backend field name
+    const weatherCondition = condition || (typeof condition === 'object' && condition?.Condition_c) || 'sunny';
+    return icons[weatherCondition.toLowerCase()] || "Sun";
   };
 
-  const getWeatherGradient = (condition) => {
+const getWeatherGradient = (condition) => {
     const gradients = {
       "sunny": "from-yellow-400 to-orange-500",
       "cloudy": "from-gray-400 to-gray-600",
@@ -56,7 +59,10 @@ const Weather = () => {
       "clear": "from-blue-400 to-blue-600",
       "overcast": "from-gray-500 to-gray-700"
     };
-    return gradients[condition.toLowerCase()] || "from-blue-400 to-blue-600";
+    
+    // Handle undefined/null condition and map backend field name
+    const weatherCondition = condition || (typeof condition === 'object' && condition?.Condition_c) || 'sunny';
+    return gradients[weatherCondition.toLowerCase()] || "from-blue-400 to-blue-600";
   };
 
   const formatDate = (dateString) => {
@@ -91,29 +97,29 @@ const Weather = () => {
               <h2 className="font-display font-semibold text-xl text-gray-900 mb-6">
                 Current Weather
               </h2>
-              <div className={`bg-gradient-to-br ${getWeatherGradient(currentWeather.condition)} p-6 rounded-2xl inline-block mb-6`}>
+<div className={`bg-gradient-to-br ${getWeatherGradient(currentWeather.Condition_c || currentWeather.condition)} p-6 rounded-2xl inline-block mb-6`}>
                 <ApperIcon 
-                  name={getWeatherIcon(currentWeather.condition)} 
+                  name={getWeatherIcon(currentWeather.Condition_c || currentWeather.condition)} 
                   size={64} 
                   className="text-white" 
                 />
               </div>
               <h3 className="text-5xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent mb-2">
-                {currentWeather.temperature}°F
+                {currentWeather.Temperature_c || currentWeather.temperature}°F
               </h3>
               <p className="text-gray-600 font-medium capitalize text-lg mb-6">
-                {currentWeather.condition}
+                {currentWeather.Condition_c || currentWeather.condition || 'sunny'}
               </p>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
                   <ApperIcon name="Droplets" size={24} className="text-blue-500 mx-auto mb-2" />
-                  <p className="text-2xl font-bold text-blue-700">{currentWeather.humidity}%</p>
+<p className="text-2xl font-bold text-blue-700">{currentWeather.Humidity_c || currentWeather.humidity}%</p>
                   <p className="text-blue-600 font-medium">Humidity</p>
                 </div>
                 <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
                   <ApperIcon name="CloudRain" size={24} className="text-green-500 mx-auto mb-2" />
-                  <p className="text-2xl font-bold text-green-700">{currentWeather.precipitation}"</p>
+                  <p className="text-2xl font-bold text-green-700">{currentWeather.Precipitation_c || currentWeather.precipitation}"</p>
                   <p className="text-green-600 font-medium">Rain</p>
                 </div>
               </div>
@@ -135,9 +141,9 @@ const Weather = () => {
                   <h3 className="font-semibold text-green-800">Growing Conditions</h3>
                 </div>
                 <p className="text-green-700 mb-2">
-                  {currentWeather.temperature > 70 && currentWeather.temperature < 85 
+{(currentWeather.Temperature_c || currentWeather.temperature) > 70 && (currentWeather.Temperature_c || currentWeather.temperature) < 85 
                     ? "Excellent growing conditions for most crops"
-                    : currentWeather.temperature > 85 
+                    : (currentWeather.Temperature_c || currentWeather.temperature) > 85 
                       ? "Hot conditions - ensure adequate irrigation"
                       : "Cool conditions - monitor sensitive crops"
                   }
@@ -154,20 +160,19 @@ const Weather = () => {
                     <ApperIcon name="Droplets" size={20} className="text-white" />
                   </div>
                   <h3 className="font-semibold text-blue-800">Irrigation Needs</h3>
+<h3 className="font-semibold text-blue-800">Irrigation Needs</h3>
                 </div>
                 <p className="text-blue-700 mb-2">
-                  {currentWeather.precipitation > 0.1 
+                  {(currentWeather.Precipitation_c || currentWeather.precipitation) > 0.1 
                     ? "Recent rainfall - reduce irrigation schedule"
-                    : currentWeather.humidity < 40 
+                    : (currentWeather.Humidity_c || currentWeather.humidity) < 40 
                       ? "Low humidity - increase irrigation frequency"
                       : "Normal irrigation schedule recommended"
                   }
                 </p>
                 <div className="flex items-center space-x-2">
                   <ApperIcon name="CloudRain" size={16} className="text-blue-600" />
-                  <span className="text-blue-600 text-sm">
-                    {currentWeather.precipitation}" precipitation today
-                  </span>
+                  <span className="text-blue-600 text-sm">{currentWeather.Precipitation_c || currentWeather.precipitation}" precipitation today</span>
                 </div>
               </div>
 
@@ -177,11 +182,13 @@ const Weather = () => {
                     <ApperIcon name="AlertTriangle" size={20} className="text-white" />
                   </div>
                   <h3 className="font-semibold text-yellow-800">Field Work</h3>
-                </div>
+</div>
                 <p className="text-yellow-700 mb-2">
-                  {currentWeather.condition.toLowerCase().includes("rain") || currentWeather.condition.toLowerCase().includes("storm")
+                  {((currentWeather.Condition_c || currentWeather.condition || 'sunny').toLowerCase().includes("rain") || 
+                    (currentWeather.Condition_c || currentWeather.condition || 'sunny').toLowerCase().includes("storm"))
                     ? "Avoid field work - muddy conditions"
-                    : currentWeather.condition.toLowerCase().includes("sunny") || currentWeather.condition.toLowerCase().includes("clear")
+                    : ((currentWeather.Condition_c || currentWeather.condition || 'sunny').toLowerCase().includes("sunny") || 
+                       (currentWeather.Condition_c || currentWeather.condition || 'sunny').toLowerCase().includes("clear"))
                       ? "Excellent conditions for field operations"
                       : "Check soil conditions before heavy machinery use"
                   }
@@ -194,9 +201,9 @@ const Weather = () => {
                     <ApperIcon name="Bug" size={20} className="text-white" />
                   </div>
                   <h3 className="font-semibold text-purple-800">Pest Control</h3>
-                </div>
+</div>
                 <p className="text-purple-700 mb-2">
-                  {currentWeather.humidity > 70 && currentWeather.temperature > 75
+                  {(currentWeather.Humidity_c || currentWeather.humidity) > 70 && (currentWeather.Temperature_c || currentWeather.temperature) > 75
                     ? "High humidity & temperature - monitor for pest activity"
                     : "Normal pest monitoring schedule recommended"
                   }
@@ -215,36 +222,36 @@ const Weather = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {forecast.map((day, index) => (
-            <div key={index} className="text-center p-4 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 hover:shadow-md transition-shadow duration-200">
-              <h3 className="font-semibold text-gray-900 mb-2">
-                {formatDate(day.date)}
+<div key={index} className="text-center p-4 bg-gradient-to-br from-white to-gray-50 rounded-xl border border-gray-100 hover:shadow-md transition-shadow duration-200">
+              <h3 className="font-medium text-gray-900 mb-3">
+                {formatDate(day.Date_c || day.date)}
               </h3>
               
-              <div className={`bg-gradient-to-br ${getWeatherGradient(day.condition)} p-3 rounded-full inline-block mb-3`}>
+<div className={`bg-gradient-to-br ${getWeatherGradient(day.Condition_c || day.condition)} p-3 rounded-full inline-block mb-3`}>
                 <ApperIcon 
-                  name={getWeatherIcon(day.condition)} 
+                  name={getWeatherIcon(day.Condition_c || day.condition)} 
                   size={32} 
                   className="text-white" 
                 />
               </div>
               
               <p className="text-2xl font-bold text-gray-900 mb-1">
-                {day.temperature}°F
+                {day.Temperature_c || day.temperature}°F
               </p>
               
               <p className="text-gray-600 capitalize text-sm mb-3">
-                {day.condition}
+                {day.Condition_c || day.condition || 'sunny'}
               </p>
               
               <div className="space-y-2">
                 <div className="flex items-center justify-center space-x-1">
                   <ApperIcon name="Droplets" size={12} className="text-blue-500" />
-                  <span className="text-xs text-gray-600">{day.humidity}%</span>
+<span className="text-xs text-gray-600">{day.Humidity_c || day.humidity}%</span>
                 </div>
                 
                 <div className="flex items-center justify-center space-x-1">
                   <ApperIcon name="CloudRain" size={12} className="text-green-500" />
-                  <span className="text-xs text-gray-600">{day.precipitation}"</span>
+                  <span className="text-xs text-gray-600">{day.Precipitation_c || day.precipitation}"</span>
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@ import Card from "@/components/atoms/Card";
 const WeatherCard = ({ weather }) => {
   if (!weather) return null;
 
-  const getWeatherIcon = (condition) => {
+const getWeatherIcon = (condition) => {
     const icons = {
       "sunny": "Sun",
       "cloudy": "Cloud",
@@ -15,10 +15,13 @@ const WeatherCard = ({ weather }) => {
       "clear": "Sun",
       "overcast": "CloudDrizzle"
     };
-    return icons[condition.toLowerCase()] || "Sun";
+    
+    // Handle undefined/null condition and map backend field name
+    const weatherCondition = condition || (typeof condition === 'object' && condition?.Condition_c) || 'sunny';
+    return icons[weatherCondition.toLowerCase()] || "Sun";
   };
 
-  const getWeatherGradient = (condition) => {
+const getWeatherGradient = (condition) => {
     const gradients = {
       "sunny": "from-yellow-400 to-orange-500",
       "cloudy": "from-gray-400 to-gray-600",
@@ -28,7 +31,10 @@ const WeatherCard = ({ weather }) => {
       "clear": "from-blue-400 to-blue-600",
       "overcast": "from-gray-500 to-gray-700"
     };
-    return gradients[condition.toLowerCase()] || "from-blue-400 to-blue-600";
+    
+    // Handle undefined/null condition and map backend field name
+    const weatherCondition = condition || (typeof condition === 'object' && condition?.Condition_c) || 'sunny';
+    return gradients[weatherCondition.toLowerCase()] || "from-blue-400 to-blue-600";
   };
 
   return (
