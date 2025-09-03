@@ -127,12 +127,14 @@ const Finance = () => {
     const currentMonthIndex = currentMonth.getMonth();
     
     const thisMonthTransactions = transactions.filter(t => {
+if (!t.date || isNaN(Date.parse(t.date))) return false;
       const transactionDate = new Date(t.date);
-      return transactionDate.getFullYear() === currentYear && 
+      return transactionDate.getFullYear() === currentYear &&
              transactionDate.getMonth() === currentMonthIndex;
     });
     
-    const thisYearTransactions = transactions.filter(t => {
+const thisYearTransactions = transactions.filter(t => {
+      if (!t.date || isNaN(Date.parse(t.date))) return false;
       const transactionDate = new Date(t.date);
       return transactionDate.getFullYear() === currentYear;
     });
@@ -169,7 +171,11 @@ const Finance = () => {
     return matchesSearch && matchesType && matchesCategory;
   });
 
-  const sortedTransactions = filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+const sortedTransactions = filteredTransactions.sort((a, b) => {
+    const dateA = a.date && !isNaN(Date.parse(a.date)) ? new Date(a.date) : new Date(0);
+    const dateB = b.date && !isNaN(Date.parse(b.date)) ? new Date(b.date) : new Date(0);
+    return dateB - dateA;
+  });
 
   const expenseCategories = [
     { value: "seeds", label: "Seeds" },
@@ -393,7 +399,7 @@ const Finance = () => {
                 {sortedTransactions.map((transaction) => (
                   <tr key={transaction.Id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-4 px-4 text-sm text-gray-600">
-                      {format(new Date(transaction.date), "MMM d, yyyy")}
+{transaction.date && !isNaN(Date.parse(transaction.date)) ? format(new Date(transaction.date), "MMM d, yyyy") : "Invalid date"}
                     </td>
                     <td className="py-4 px-4 text-sm text-gray-900">
                       {getFarmName(transaction.farmId)}

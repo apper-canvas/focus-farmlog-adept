@@ -333,12 +333,12 @@ const Crops = () => {
                 
                 <div className="flex items-center space-x-2 text-gray-600">
                   <ApperIcon name="Calendar" size={16} />
-                  <span>Planted: {format(new Date(crop.plantingDate), "MMM d, yyyy")}</span>
+<span>Planted: {crop.plantingDate && !isNaN(Date.parse(crop.plantingDate)) ? format(new Date(crop.plantingDate), "MMM d, yyyy") : "Invalid date"}</span>
                 </div>
                 
                 <div className="flex items-center space-x-2 text-gray-600">
                   <ApperIcon name="CalendarCheck" size={16} />
-                  <span>Harvest: {format(new Date(crop.expectedHarvest), "MMM d, yyyy")}</span>
+                  <span>Harvest: {crop.expectedHarvest && !isNaN(Date.parse(crop.expectedHarvest)) ? format(new Date(crop.expectedHarvest), "MMM d, yyyy") : "Invalid date"}</span>
                 </div>
                 
                 {crop.notes && (

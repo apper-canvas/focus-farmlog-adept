@@ -14,7 +14,7 @@ const TaskItem = ({ task, onToggle, onEdit, onDelete, className }) => {
     return colors[priority.toLowerCase()] || "default";
   };
 
-  const isOverdue = new Date(task.dueDate) < new Date() && !task.completed;
+const isOverdue = task.dueDate && !isNaN(Date.parse(task.dueDate)) ? new Date(task.dueDate) < new Date() && !task.completed : false;
 
   return (
     <div className={cn(
@@ -49,7 +49,7 @@ const TaskItem = ({ task, onToggle, onEdit, onDelete, className }) => {
           <div className="flex items-center space-x-3 mt-2">
             <span className="text-xs text-gray-500 flex items-center">
               <ApperIcon name="Calendar" size={12} className="mr-1" />
-              {format(new Date(task.dueDate), "MMM d, yyyy")}
+{task.dueDate && !isNaN(Date.parse(task.dueDate)) ? format(new Date(task.dueDate), "MMM d, yyyy") : "Invalid date"}
             </span>
             <Badge variant={getPriorityColor(task.priority)} size="sm">
               {task.priority}

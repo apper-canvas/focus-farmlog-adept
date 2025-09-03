@@ -69,10 +69,10 @@ const Dashboard = () => {
     const activeCrops = data.crops.filter(c => c.status !== "harvested").length;
     const pendingTasks = data.tasks.filter(t => !t.completed).length;
     const weekExpenses = data.transactions
-      .filter(t => t.type === "expense" && new Date(t.date) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
+.filter(t => t.type === "expense" && t.date && !isNaN(Date.parse(t.date)) && new Date(t.date) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
       .reduce((sum, t) => sum + t.amount, 0);
     const monthIncome = data.transactions
-      .filter(t => t.type === "income" && new Date(t.date) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000))
+      .filter(t => t.type === "income" && t.date && !isNaN(Date.parse(t.date)) && new Date(t.date) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000))
       .reduce((sum, t) => sum + t.amount, 0);
 
     return { activeCrops, pendingTasks, weekExpenses, monthIncome };
@@ -83,8 +83,12 @@ const Dashboard = () => {
 
   const stats = getStats();
   const upcomingTasks = data.tasks
-    .filter(t => !t.completed)
-    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+.filter(t => !t.completed)
+    .sort((a, b) => {
+      const dateA = a.dueDate && !isNaN(Date.parse(a.dueDate)) ? new Date(a.dueDate) : new Date(0);
+      const dateB = b.dueDate && !isNaN(Date.parse(b.dueDate)) ? new Date(b.dueDate) : new Date(0);
+      return dateA - dateB;
+    })
     .slice(0, 5);
 
   return (
