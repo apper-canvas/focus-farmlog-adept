@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
+
+const sizes = {
+  sm: "max-w-sm",
+  md: "max-w-md",
+  lg: "max-w-lg",
+  xl: "max-w-xl",
+  "2xl": "max-w-2xl"
+};
 
 const Modal = ({ 
   isOpen, 
@@ -11,24 +19,15 @@ const Modal = ({
   size = "md",
   ...props 
 }) => {
-  if (!isOpen) return null;
-
-  const sizes = {
-    sm: "max-w-md",
-    md: "max-w-lg", 
-    lg: "max-w-2xl",
-    xl: "max-w-4xl"
-  };
-
-  // Handle backdrop click
+  // Handle backdrop click to close modal
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  // Handle escape key
-  React.useEffect(() => {
+  // Handle escape key to close modal
+  useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape" && isOpen) {
         onClose();
@@ -39,8 +38,8 @@ const Modal = ({
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
-  // Prevent body scroll when modal is open
-  React.useEffect(() => {
+  // Manage body scroll when modal is open
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -52,6 +51,9 @@ const Modal = ({
     };
   }, [isOpen]);
 
+  // Early return after hooks
+  if (!isOpen) return null;
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm"
@@ -60,7 +62,7 @@ const Modal = ({
     >
       <div 
         className={cn(
-          "w-full bg-white rounded-xl shadow-2xl transform transition-all duration-200 animate-slide-up",
+          "w-full bg-white rounded-xl shadow-2xl transform transition-all duration-200",
           sizes[size],
           className
         )}
@@ -68,12 +70,13 @@ const Modal = ({
       >
         {title && (
           <div className="flex items-center justify-between p-6 border-b border-gray-100">
-            <h2 className="font-display font-semibold text-xl text-gray-900">
+            <h2 className="font-semibold text-xl text-gray-900">
               {title}
             </h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-lg hover:bg-gray-100"
+              aria-label="Close modal"
             >
               <ApperIcon name="X" size={20} />
             </button>
