@@ -5,13 +5,13 @@ import Badge from "@/components/atoms/Badge";
 import { format } from "date-fns";
 
 const TaskItem = ({ task, onToggle, onEdit, onDelete, className }) => {
-  const getPriorityColor = (priority) => {
+const getPriorityColor = (priority) => {
     const colors = {
       "high": "error",
       "medium": "warning",
       "low": "success"
     };
-    return colors[priority.toLowerCase()] || "default";
+    return colors[(priority ?? "").toLowerCase()] || "default";
   };
 
 const isOverdue = task.dueDate && !isNaN(Date.parse(task.dueDate)) ? new Date(task.dueDate) < new Date() && !task.completed : false;
