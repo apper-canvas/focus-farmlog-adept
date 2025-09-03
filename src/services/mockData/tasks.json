@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "farmId": 1,
+    "cropId": 1,
+    "title": "Apply Fertilizer",
+    "description": "Apply nitrogen fertilizer to corn field",
+    "dueDate": "2024-06-15",
+    "priority": "high",
+    "completed": false
+  },
+  {
+    "Id": 2,
+    "farmId": 1,
+    "cropId": 2,
+    "title": "Weed Control",
+    "description": "Herbicide application for soybean field",
+    "dueDate": "2024-06-20",
+    "priority": "medium",
+    "completed": false
+  },
+  {
+    "Id": 3,
+    "farmId": 2,
+    "cropId": 3,
+    "title": "Harvest Wheat",
+    "description": "Begin wheat harvest in east section",
+    "dueDate": "2024-08-12",
+    "priority": "high",
+    "completed": false
+  },
+  {
+    "Id": 4,
+    "farmId": 2,
+    "cropId": 4,
+    "title": "Pruning",
+    "description": "Prune tomato plants in greenhouse",
+    "dueDate": "2024-06-10",
+    "priority": "medium",
+    "completed": true
+  },
+  {
+    "Id": 5,
+    "farmId": 3,
+    "cropId": 5,
+    "title": "Irrigation Check",
+    "description": "Inspect and maintain irrigation system",
+    "dueDate": "2024-06-18",
+    "priority": "medium",
+    "completed": false
+  },
+  {
+    "Id": 6,
+    "farmId": 1,
+    "cropId": 1,
+    "title": "Pest Monitoring",
+    "description": "Check corn for corn borer infestation",
+    "dueDate": "2024-07-01",
+    "priority": "high",
+    "completed": false
+  },
+  {
+    "Id": 7,
+    "farmId": 2,
+    "cropId": 4,
+    "title": "Water Quality Test",
+    "description": "Test hydroponic solution pH and nutrients",
+    "dueDate": "2024-06-25",
+    "priority": "low",
+    "completed": false
+  },
+  {
+    "Id": 8,
+    "farmId": 3,
+    "cropId": 5,
+    "title": "Hill Potatoes",
+    "description": "Hill up potato rows for better tuber development",
+    "dueDate": "2024-06-30",
+    "priority": "medium",
+    "completed": false
+  }
+]

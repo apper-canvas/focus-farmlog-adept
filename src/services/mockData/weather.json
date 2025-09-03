@@ -1,0 +1,46 @@
+{
+  "current": {
+    "date": "2024-06-15",
+    "temperature": 78,
+    "condition": "sunny",
+    "humidity": 55,
+    "precipitation": 0.0
+  },
+  "forecast": [
+    {
+      "date": "2024-06-16",
+      "temperature": 82,
+      "condition": "sunny",
+      "humidity": 50,
+      "precipitation": 0.0
+    },
+    {
+      "date": "2024-06-17",
+      "temperature": 79,
+      "condition": "cloudy",
+      "humidity": 65,
+      "precipitation": 0.1
+    },
+    {
+      "date": "2024-06-18",
+      "temperature": 75,
+      "condition": "rainy",
+      "humidity": 80,
+      "precipitation": 0.8
+    },
+    {
+      "date": "2024-06-19",
+      "temperature": 73,
+      "condition": "rainy",
+      "humidity": 85,
+      "precipitation": 1.2
+    },
+    {
+      "date": "2024-06-20",
+      "temperature": 77,
+      "condition": "cloudy",
+      "humidity": 70,
+      "precipitation": 0.2
+    }
+  ]
+}

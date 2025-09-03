@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "name": "Green Valley Farm",
+    "location": "Springfield, Illinois",
+    "size": 250,
+    "sizeUnit": "acres"
+  },
+  {
+    "Id": 2,
+    "name": "Sunrise Agricultural Co.",
+    "location": "Cedar Falls, Iowa",
+    "size": 420,
+    "sizeUnit": "acres"
+  },
+  {
+    "Id": 3,
+    "name": "Prairie View Ranch",
+    "location": "Omaha, Nebraska",
+    "size": 180,
+    "sizeUnit": "acres"
+  }
+]

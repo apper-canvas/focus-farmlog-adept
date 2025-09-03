@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "farmId": 1,
+    "type": "corn",
+    "plantingDate": "2024-04-15",
+    "expectedHarvest": "2024-09-20",
+    "field": "North Field",
+    "status": "growing",
+    "notes": "Premium variety, good soil preparation"
+  },
+  {
+    "Id": 2,
+    "farmId": 1,
+    "type": "soybeans",
+    "plantingDate": "2024-05-10",
+    "expectedHarvest": "2024-10-15",
+    "field": "South Field",
+    "status": "planted",
+    "notes": "First year planting this variety"
+  },
+  {
+    "Id": 3,
+    "farmId": 2,
+    "type": "wheat",
+    "plantingDate": "2024-03-20",
+    "expectedHarvest": "2024-08-10",
+    "field": "East Section",
+    "status": "ready",
+    "notes": "Looking good for harvest"
+  },
+  {
+    "Id": 4,
+    "farmId": 2,
+    "type": "tomatoes",
+    "plantingDate": "2024-05-01",
+    "expectedHarvest": "2024-08-30",
+    "field": "Greenhouse A",
+    "status": "growing",
+    "notes": "Hydroponic system, excellent growth"
+  },
+  {
+    "Id": 5,
+    "farmId": 3,
+    "type": "potatoes",
+    "plantingDate": "2024-04-05",
+    "expectedHarvest": "2024-09-05",
+    "field": "West Block",
+    "status": "growing",
+    "notes": "Russet variety, good emergence"
+  },
+  {
+    "Id": 6,
+    "farmId": 1,
+    "type": "lettuce",
+    "plantingDate": "2024-02-15",
+    "expectedHarvest": "2024-04-20",
+    "field": "Tunnel House",
+    "status": "harvested",
+    "notes": "Great yield, sold to local restaurants"
+  }
+]

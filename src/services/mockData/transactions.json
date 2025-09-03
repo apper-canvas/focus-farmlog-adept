@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "farmId": 1,
+    "type": "expense",
+    "category": "seeds",
+    "amount": 1250,
+    "date": "2024-04-10",
+    "description": "Premium corn seed for north field"
+  },
+  {
+    "Id": 2,
+    "farmId": 1,
+    "type": "expense",
+    "category": "fertilizer",
+    "amount": 850,
+    "date": "2024-04-12",
+    "description": "Nitrogen fertilizer - 10 bags"
+  },
+  {
+    "Id": 3,
+    "farmId": 2,
+    "type": "income",
+    "category": "crop_sales",
+    "amount": 15400,
+    "date": "2024-05-20",
+    "description": "Wheat crop sale to grain elevator"
+  },
+  {
+    "Id": 4,
+    "farmId": 1,
+    "type": "expense",
+    "category": "fuel",
+    "amount": 320,
+    "date": "2024-05-15",
+    "description": "Diesel fuel for tractors"
+  },
+  {
+    "Id": 5,
+    "farmId": 3,
+    "type": "expense",
+    "category": "equipment",
+    "amount": 2800,
+    "date": "2024-05-01",
+    "description": "New irrigation sprinkler system"
+  },
+  {
+    "Id": 6,
+    "farmId": 2,
+    "type": "expense",
+    "category": "labor",
+    "amount": 1200,
+    "date": "2024-05-25",
+    "description": "Seasonal workers for greenhouse"
+  },
+  {
+    "Id": 7,
+    "farmId": 1,
+    "type": "income",
+    "category": "crop_sales",
+    "amount": 3200,
+    "date": "2024-04-22",
+    "description": "Lettuce sales to local restaurants"
+  },
+  {
+    "Id": 8,
+    "farmId": 2,
+    "type": "expense",
+    "category": "pest_control",
+    "amount": 450,
+    "date": "2024-05-30",
+    "description": "Insecticide for tomato plants"
+  },
+  {
+    "Id": 9,
+    "farmId": 3,
+    "type": "income",
+    "category": "subsidies",
+    "amount": 2500,
+    "date": "2024-05-10",
+    "description": "Conservation program payment"
+  },
+  {
+    "Id": 10,
+    "farmId": 1,
+    "type": "expense",
+    "category": "maintenance",
+    "amount": 680,
+    "date": "2024-06-01",
+    "description": "Tractor maintenance and repairs"
+  }
+]
