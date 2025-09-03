@@ -3,6 +3,7 @@ import Card from "@/components/atoms/Card";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
+import Modal from "@/components/atoms/Modal";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
@@ -108,7 +109,7 @@ const Farms = () => {
         <h1 className="font-display font-bold text-3xl bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
           Farm Management
         </h1>
-        <Button 
+<Button 
           onClick={() => setShowForm(true)}
           className="shadow-lg"
         >
@@ -117,67 +118,61 @@ const Farms = () => {
         </Button>
       </div>
 
-      {showForm && (
-        <Card className="p-6" gradient>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display font-semibold text-xl text-gray-900">
-              {editingFarm ? "Edit Farm" : "Add New Farm"}
-            </h2>
-            <Button variant="ghost" onClick={resetForm}>
-              <ApperIcon name="X" size={20} />
+<Modal
+        isOpen={showForm}
+        onClose={resetForm}
+        title={editingFarm ? "Edit Farm" : "Add New Farm"}
+        size="lg"
+      >
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Input
+            label="Farm Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            placeholder="Enter farm name"
+            required
+          />
+          
+          <Input
+            label="Location"
+            value={formData.location}
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+            placeholder="Enter farm location"
+            required
+          />
+          
+          <Input
+            label="Farm Size"
+            type="number"
+            value={formData.size}
+            onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+            placeholder="Enter size"
+            min="0"
+            step="0.1"
+            required
+          />
+          
+          <Select
+            label="Size Unit"
+            value={formData.sizeUnit}
+            onChange={(e) => setFormData({ ...formData, sizeUnit: e.target.value })}
+            options={sizeUnitOptions}
+          />
+
+          <div className="md:col-span-2 flex space-x-4">
+            <Button type="submit" className="flex-1">
+              <ApperIcon name="Save" size={16} className="mr-2" />
+              {editingFarm ? "Update Farm" : "Add Farm"}
+            </Button>
+            <Button type="button" variant="outline" onClick={resetForm}>
+              Cancel
             </Button>
           </div>
-
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input
-              label="Farm Name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              placeholder="Enter farm name"
-              required
-            />
-            
-            <Input
-              label="Location"
-              value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              placeholder="Enter farm location"
-              required
-            />
-            
-            <Input
-              label="Farm Size"
-              type="number"
-              value={formData.size}
-              onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-              placeholder="Enter size"
-              min="0"
-              step="0.1"
-              required
-            />
-            
-            <Select
-              label="Size Unit"
-              value={formData.sizeUnit}
-              onChange={(e) => setFormData({ ...formData, sizeUnit: e.target.value })}
-              options={sizeUnitOptions}
-            />
-
-            <div className="md:col-span-2 flex space-x-4">
-              <Button type="submit" className="flex-1">
-                <ApperIcon name="Save" size={16} className="mr-2" />
-                {editingFarm ? "Update Farm" : "Add Farm"}
-              </Button>
-              <Button type="button" variant="outline" onClick={resetForm}>
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </Card>
-      )}
+        </form>
+      </Modal>
 
       {farms.length === 0 ? (
-        <Empty
+<Empty
           title="No farms added yet"
           description="Start by adding your first farm to begin managing your agricultural operations"
           icon="MapPin"
