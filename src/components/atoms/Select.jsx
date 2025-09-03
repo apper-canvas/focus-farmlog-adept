@@ -28,19 +28,22 @@ const Select = forwardRef(({
           )}
           ref={ref}
           {...props}
-        >
-          <option value="">{placeholder}</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+>
+          <option value="" disabled>
+            {placeholder}
+          </option>
+          {options?.map((option) => (
+            <option 
+              key={option?.value || `option-${Math.random()}`} 
+              value={option?.value || ""}
+            >
+              {option?.label || option?.value || "Unknown"}
             </option>
           ))}
         </select>
-        <ApperIcon 
-          name="ChevronDown" 
-          size={20} 
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
-        />
+        <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+          <ApperIcon name="ChevronDown" size={16} className="text-gray-400" />
+        </div>
       </div>
       {error && (
         <p className="text-sm text-error mt-1">{error}</p>
